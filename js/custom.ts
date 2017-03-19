@@ -42,24 +42,27 @@ function buscaProduto(){
   };
   xmlhttp.open("GET", url, true);
   xmlhttp.send();
+
 }
 function cadastrarProduto(){
-  var produto = '{' +
-  '"Id": ' + (<HTMLInputElement>document.getElementById("txtId")).value + ',' +
-  '"Name": "' + (<HTMLInputElement>document.getElementById("txtDescricao")).value + '",' +
-  '"Category": "' + (<HTMLInputElement>document.getElementById("txtCategoria")).value + '",' +
-  '"Price": ' + (<HTMLInputElement>document.getElementById("txtPreco")).value + '' +
-  '}';
+
+   var produto: Produto = new Produto(  (<HTMLInputElement>document.getElementById("txtId")).value,
+                                        (<HTMLInputElement>document.getElementById("txtDescricao")).value,
+                                        (<HTMLInputElement>document.getElementById("txtPreco")).value,
+                                        (<HTMLInputElement>document.getElementById("txtCategoria")).value
+                                      );
 
   var xmlhttp: XMLHttpRequest = new XMLHttpRequest();
   var url: string = "http://localhost:57708/api/product/";
 
   xmlhttp.onreadystatechange = function() {
+
     if (this.status == 200 && this.readyState == 4){
       alert("Produto inserido com sucesso!\n\n" + "Resposta nº: " + this.status + "\n" + "Resposta: " + this.response);
     }else if (this.readyState == 4) {
       alert("Falha no processo!\n\n" + "Erro nº: " + this.status + "\n" + "Resposta: " + this.response);
     }
+    
   };
 
   xmlhttp.open("POST", url, true);
@@ -68,7 +71,7 @@ function cadastrarProduto(){
 }
 function deletaProduto(){
 
-  var idProduto = (<HTMLInputElement>document.getElementById("txtPesquisaProduto")).value;
+  var idProduto: string = (<HTMLInputElement>document.getElementById("txtPesquisaProduto")).value;
 
   var xmlhttp: XMLHttpRequest = new XMLHttpRequest();
   var url: string = "http://localhost:57708/api/product/" + idProduto;
@@ -86,22 +89,23 @@ function deletaProduto(){
 }
 
 function atualizaProduto(){
-  var produto = '{' +
-  '"Id": ' + (<HTMLInputElement>document.getElementById("txtId")).value + ',' +
-  '"Name": "' + (<HTMLInputElement>document.getElementById("txtDescricao")).value + '",' +
-  '"Category": "' + (<HTMLInputElement>document.getElementById("txtCategoria")).value + '",' +
-  '"Price": ' + (<HTMLInputElement>document.getElementById("txtPreco")).value + '' +
-  '}';
+   var produto: Produto = new Produto(  (<HTMLInputElement>document.getElementById("txtId")).value,
+                                        (<HTMLInputElement>document.getElementById("txtDescricao")).value,
+                                        (<HTMLInputElement>document.getElementById("txtPreco")).value,
+                                        (<HTMLInputElement>document.getElementById("txtCategoria")).value
+                                      );
 
   var xmlhttp: XMLHttpRequest = new XMLHttpRequest();
   var url: string = "http://localhost:57708/api/product/";
 
   xmlhttp.onreadystatechange = function() {
+
     if (this.status == 200 && this.readyState == 4){
       alert("Produto atualizado com sucesso!\n\n" + "Resposta nº: " + this.status + "\n" + "Resposta: " + this.response);
     }else if (this.readyState == 4) {
       alert("Falha no processo!\n\n" + "Erro nº: " + this.status + "\n" + "Resposta: " + this.response);
     }
+    
   };
 
   xmlhttp.open("PUT", url, true);
