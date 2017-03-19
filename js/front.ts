@@ -1,44 +1,101 @@
-class front{}
-function exibe(produtos: Array<Produto>): void{
-    var body: any;
-    body = document.getElementById("body");
-    
-    var aux: string;
+function criaTabelas(numeroTabelas: number): void{
 
-    for (var i: number = 0; i < produtos.length; i++){
-        aux =   '<div class="panel panel-primary" id="div_Produto_' + produtos[i].id + '">' + '\n' + 
-                '  <div class="panel-heading" id = "div_heading_Produto_' + produtos[i].id + '">Produto</div>' + '\n' + 
-                '' + '\n' + 
-                '  <div class="panel-body">' + '\n' + 
-                '' + '\n' + 
-                '    <div class="col-sm-1">' + '\n' + 
-                '        <input placeholder="ID"  type="text" class="form-control" id="txtId_' + produtos[i].id + '">' + '\n' + 
-                '    </div>' + '\n' + 
-                '' + '\n' + 
-                '    <div class="col-sm-5">' + '\n' + 
-                '      <input placeholder="Descrição" type="text" class="form-control" id="txtDescricao_' + produtos[i].id + '">' + '\n' + 
-                '    </div>' + '\n' + 
-                '' + '\n' + 
-                '    <div class="col-sm-2">' + '\n' + 
-                '      <div class="input-group">' + '\n' + 
-                '          <span class="input-group-addon">R$</span>' + '\n' + 
-                '          <input placeholder="Preço (R$)" type="number" min="0" step="1.00" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="txtPreco_' + produtos[i].id + '" />' + '\n' + 
-                '      </div>' + '\n' + 
-                '    </div>' + '\n' + 
-                '' + '\n' + 
-                '    <div class="col-sm-4">' + '\n' + 
-                '      <input placeholder="Categoria" type="text" class="form-control" id="txtCategoria_' + produtos[i].id + '">' + '\n' + 
-                '    </div>' + '\n' + 
-                '' + '\n' + 
-                '  </div>' + '\n' + 
-                '  ' + '\n' + 
-                '</div>'
+    var numTabela: number = 1;
 
-        body.innerHTML += aux;
+    for (var iCount: number = 0; iCount < numeroTabelas; iCount++){         
+        var body: HTMLElement;
+        body = document.getElementById("body");
 
-        (<HTMLInputElement> document.getElementById("txtID_" + produtos[i].id)).value = "" + produtos[i].id;
-        (<HTMLInputElement> document.getElementById("txtDescricao_" + produtos[i].id)).value = "" + produtos[i].descricao;
-        (<HTMLInputElement> document.getElementById("txtPreco_" + produtos[i].id)).value = "" + produtos[i].preco;
-        (<HTMLInputElement> document.getElementById("txtCategoria_" + produtos[i].id)).value = "" + produtos[i].categoria;
+        var bEncontrouNumero: boolean = false;
+
+        while (!(bEncontrouNumero)){
+            if (document.getElementById("divPanelPrimary_" + numTabela) == null)
+                bEncontrouNumero = true;
+            else{
+                numTabela++;
+            }
+        }        
+
+            var divPanelPrimary: HTMLDivElement = document.createElement("div");
+            divPanelPrimary.className = "panel panel-primary";
+            divPanelPrimary.id = "divPanelPrimary_" + numTabela; 
+            body.appendChild(divPanelPrimary);
+
+                var divPanelHeading: HTMLDivElement = document.createElement("div");
+                divPanelHeading.className = "panel-heading";
+                divPanelHeading.id = "divPanelHeading_" + numTabela;
+                divPanelHeading.innerHTML = "Produto " + numTabela;
+                divPanelPrimary.appendChild(divPanelHeading);
+
+                var divPanelBody: HTMLDivElement = document.createElement("div");
+                divPanelBody.className = "panel-body";
+                divPanelBody.id = "divPanelBody_" + numTabela;
+                divPanelPrimary.appendChild(divPanelBody);
+
+                    var divColID: HTMLDivElement = document.createElement("div");
+                    divColID.className = "col-sm-1";
+                    divColID.id = "divColID_" + numTabela;
+                    divPanelBody.appendChild(divColID);
+
+                        var inputID: HTMLInputElement = document.createElement("input");
+                        inputID.placeholder = "ID";
+                        inputID.type = "text";
+                        inputID.className = "form-control";
+                        inputID.id = "txtId_" + numTabela;
+                        divColID.appendChild(inputID);
+
+                    var divColDescricao: HTMLDivElement = document.createElement("div");
+                    divColDescricao.className = "col-sm-5";
+                    divColDescricao.id = "divColDescricao_" + numTabela;
+                    divPanelBody.appendChild(divColDescricao);
+
+                        var inputDescricao: HTMLInputElement = document.createElement("input");
+                        inputDescricao.placeholder = "Descrição";
+                        inputDescricao.type = "text";
+                        inputDescricao.className = "form-control";
+                        inputDescricao.id = "txtDescricao_" + numTabela;
+                        divColDescricao.appendChild(inputDescricao);
+
+                    var divColPreco: HTMLDivElement = document.createElement("div");
+                    divColPreco.className = "col-sm-2";
+                    divColPreco.id = "divColPreco_" + numTabela;
+                    divPanelBody.appendChild(divColPreco);
+
+                        var divClassPreco: HTMLDivElement = document.createElement("div");
+                        divClassPreco.className = "input-group";
+                        divClassPreco.id = "divClassPreco_" + numTabela;
+                        divColPreco.appendChild(divClassPreco);
+
+                            var spanClassGroupPreco: HTMLSpanElement = document.createElement("span");
+                            spanClassGroupPreco.className = "input-group-addon";
+                            spanClassGroupPreco.innerHTML = "R$";
+                            spanClassGroupPreco.id = "spanClassGroupPreco_" + numTabela;
+                            divClassPreco.appendChild(spanClassGroupPreco);
+
+                            var inputPreco: HTMLInputElement = document.createElement("input");
+                            inputPreco.placeholder = "Preço (R$)";
+                            inputPreco.type = "number";
+                            inputPreco.min = "0";
+                            inputPreco.step = "1.00";
+                            inputPreco.className = "form-control currency";
+                            inputPreco.id = "txtPreco_" + "#";
+                            divClassPreco.appendChild(inputPreco);    
+
+                    var divColCategoria: HTMLDivElement = document.createElement("div");
+                    divColCategoria.className = "col-sm-4";
+                    divColCategoria.id = "divColCategoria_" + numTabela;
+                    divPanelBody.appendChild(divColCategoria);
+
+                        var inputCategoria: HTMLInputElement = document.createElement("input");
+                        inputCategoria.placeholder = "Categoria";
+                        inputCategoria.type = "text";
+                        inputCategoria.className = "form-control";
+                        inputCategoria.id = "txtDescricao_" + numTabela;
+                        divColCategoria.appendChild(inputCategoria);       
+
     }
+}
+
+function exibe(){
+    
 }

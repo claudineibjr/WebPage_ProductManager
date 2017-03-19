@@ -1,39 +1,79 @@
-function exibe(produtos) {
-    var body;
-    body = document.getElementById("body");
-    var aux;
-    for (var i = 0; i < produtos.length; i++) {
-        aux = '<div class="panel panel-primary" id="div_Produto_' + produtos[i].id + '">' + '\n' +
-            '  <div class="panel-heading" id = "div_heading_Produto_' + produtos[i].id + '">Produto</div>' + '\n' +
-            '' + '\n' +
-            '  <div class="panel-body">' + '\n' +
-            '' + '\n' +
-            '    <div class="col-sm-1">' + '\n' +
-            '        <input placeholder="ID"  type="text" class="form-control" id="txtId_' + produtos[i].id + '">' + '\n' +
-            '    </div>' + '\n' +
-            '' + '\n' +
-            '    <div class="col-sm-5">' + '\n' +
-            '      <input placeholder="Descrição" type="text" class="form-control" id="txtDescricao_' + produtos[i].id + '">' + '\n' +
-            '    </div>' + '\n' +
-            '' + '\n' +
-            '    <div class="col-sm-2">' + '\n' +
-            '      <div class="input-group">' + '\n' +
-            '          <span class="input-group-addon">R$</span>' + '\n' +
-            '          <input placeholder="Preço (R$)" type="number" min="0" step="1.00" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control currency" id="txtPreco_' + produtos[i].id + '" />' + '\n' +
-            '      </div>' + '\n' +
-            '    </div>' + '\n' +
-            '' + '\n' +
-            '    <div class="col-sm-4">' + '\n' +
-            '      <input placeholder="Categoria" type="text" class="form-control" id="txtCategoria_' + produtos[i].id + '">' + '\n' +
-            '    </div>' + '\n' +
-            '' + '\n' +
-            '  </div>' + '\n' +
-            '  ' + '\n' +
-            '</div>';
-        body.innerHTML += aux;
-        document.getElementById("txtID_" + produtos[i].id).value = "" + produtos[i].id;
-        document.getElementById("txtDescricao_" + produtos[i].id).value = "" + produtos[i].descricao;
-        document.getElementById("txtPreco_" + produtos[i].id).value = "" + produtos[i].preco;
-        document.getElementById("txtCategoria_" + produtos[i].id).value = "" + produtos[i].categoria;
+function criaTabelas(numeroTabelas) {
+    var numTabela = 1;
+    for (var iCount = 0; iCount < numeroTabelas; iCount++) {
+        var body;
+        body = document.getElementById("body");
+        var bEncontrouNumero = false;
+        while (!(bEncontrouNumero)) {
+            if (document.getElementById("divPanelPrimary_" + numTabela) == null)
+                bEncontrouNumero = true;
+            else {
+                numTabela++;
+            }
+        }
+        var divPanelPrimary = document.createElement("div");
+        divPanelPrimary.className = "panel panel-primary";
+        divPanelPrimary.id = "divPanelPrimary_" + numTabela;
+        body.appendChild(divPanelPrimary);
+        var divPanelHeading = document.createElement("div");
+        divPanelHeading.className = "panel-heading";
+        divPanelHeading.id = "divPanelHeading_" + numTabela;
+        divPanelHeading.innerHTML = "Produto " + numTabela;
+        divPanelPrimary.appendChild(divPanelHeading);
+        var divPanelBody = document.createElement("div");
+        divPanelBody.className = "panel-body";
+        divPanelBody.id = "divPanelBody_" + numTabela;
+        divPanelPrimary.appendChild(divPanelBody);
+        var divColID = document.createElement("div");
+        divColID.className = "col-sm-1";
+        divColID.id = "divColID_" + numTabela;
+        divPanelBody.appendChild(divColID);
+        var inputID = document.createElement("input");
+        inputID.placeholder = "ID";
+        inputID.type = "text";
+        inputID.className = "form-control";
+        inputID.id = "txtId_" + numTabela;
+        divColID.appendChild(inputID);
+        var divColDescricao = document.createElement("div");
+        divColDescricao.className = "col-sm-5";
+        divColDescricao.id = "divColDescricao_" + numTabela;
+        divPanelBody.appendChild(divColDescricao);
+        var inputDescricao = document.createElement("input");
+        inputDescricao.placeholder = "Descrição";
+        inputDescricao.type = "text";
+        inputDescricao.className = "form-control";
+        inputDescricao.id = "txtDescricao_" + numTabela;
+        divColDescricao.appendChild(inputDescricao);
+        var divColPreco = document.createElement("div");
+        divColPreco.className = "col-sm-2";
+        divColPreco.id = "divColPreco_" + numTabela;
+        divPanelBody.appendChild(divColPreco);
+        var divClassPreco = document.createElement("div");
+        divClassPreco.className = "input-group";
+        divClassPreco.id = "divClassPreco_" + numTabela;
+        divColPreco.appendChild(divClassPreco);
+        var spanClassGroupPreco = document.createElement("span");
+        spanClassGroupPreco.className = "input-group-addon";
+        spanClassGroupPreco.innerHTML = "R$";
+        spanClassGroupPreco.id = "spanClassGroupPreco_" + numTabela;
+        divClassPreco.appendChild(spanClassGroupPreco);
+        var inputPreco = document.createElement("input");
+        inputPreco.placeholder = "Preço (R$)";
+        inputPreco.type = "number";
+        inputPreco.min = "0";
+        inputPreco.step = "1.00";
+        inputPreco.className = "form-control currency";
+        inputPreco.id = "txtPreco_" + "#";
+        divClassPreco.appendChild(inputPreco);
+        var divColCategoria = document.createElement("div");
+        divColCategoria.className = "col-sm-4";
+        divColCategoria.id = "divColCategoria_" + numTabela;
+        divPanelBody.appendChild(divColCategoria);
+        var inputCategoria = document.createElement("input");
+        inputCategoria.placeholder = "Categoria";
+        inputCategoria.type = "text";
+        inputCategoria.className = "form-control";
+        inputCategoria.id = "txtDescricao_" + numTabela;
+        divColCategoria.appendChild(inputCategoria);
     }
 }

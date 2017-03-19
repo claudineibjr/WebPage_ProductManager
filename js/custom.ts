@@ -1,3 +1,6 @@
+var criaTabelas: any;
+var exibe: any;
+
 class Produto {
     id: Number;
     descricao: String;
@@ -33,7 +36,7 @@ function buscaProduto(){
         produtos.push(produto);
       }
 
-      exibe(produtos);
+      criaTabelas(produtos.length);
 
       alert("Produto atualizado com sucesso!\n\n" + "Resposta nº: " + this.status + "\n" + "Resposta: " + this.response);
     }else if (this.readyState == 4) {

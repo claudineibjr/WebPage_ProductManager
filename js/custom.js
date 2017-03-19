@@ -1,3 +1,4 @@
+var criaTabelas;
 var Produto = (function () {
     function Produto(_id, _descricao, _preco, _categoria) {
         this.id = _id;
@@ -22,7 +23,7 @@ function buscaProduto() {
                 produtos = new Array();
                 produtos.push(produto);
             }
-            exibe(produtos);
+            criaTabelas(produtos.length);
             alert("Produto atualizado com sucesso!\n\n" + "Resposta nº: " + this.status + "\n" + "Resposta: " + this.response);
         }
         else if (this.readyState == 4) {
@@ -33,12 +34,7 @@ function buscaProduto() {
     xmlhttp.send();
 }
 function cadastrarProduto() {
-    var produto = '{' +
-        '"Id": ' + document.getElementById("txtId").value + ',' +
-        '"Name": "' + document.getElementById("txtDescricao").value + '",' +
-        '"Category": "' + document.getElementById("txtCategoria").value + '",' +
-        '"Price": ' + document.getElementById("txtPreco").value + '' +
-        '}';
+    var produto = new Produto(document.getElementById("txtId").value, document.getElementById("txtDescricao").value, document.getElementById("txtPreco").value, document.getElementById("txtCategoria").value);
     var xmlhttp = new XMLHttpRequest();
     var url = "http://localhost:57708/api/product/";
     xmlhttp.onreadystatechange = function () {
@@ -69,12 +65,7 @@ function deletaProduto() {
     xmlhttp.send();
 }
 function atualizaProduto() {
-    var produto = '{' +
-        '"Id": ' + document.getElementById("txtId").value + ',' +
-        '"Name": "' + document.getElementById("txtDescricao").value + '",' +
-        '"Category": "' + document.getElementById("txtCategoria").value + '",' +
-        '"Price": ' + document.getElementById("txtPreco").value + '' +
-        '}';
+    var produto = new Produto(document.getElementById("txtId").value, document.getElementById("txtDescricao").value, document.getElementById("txtPreco").value, document.getElementById("txtCategoria").value);
     var xmlhttp = new XMLHttpRequest();
     var url = "http://localhost:57708/api/product/";
     xmlhttp.onreadystatechange = function () {
