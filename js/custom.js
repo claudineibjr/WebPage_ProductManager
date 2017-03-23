@@ -61,8 +61,7 @@ function cadastrarProduto() {
     xmlhttp.setRequestHeader("Content-type", "application/JSON");
     xmlhttp.send(produto);
 }
-function deletaProduto() {
-    var idProduto = document.getElementById("txtPesquisaProduto").value;
+function deletaProduto(idProduto) {
     var xmlhttp = new XMLHttpRequest();
     var url = "http://localhost:57708/api/product/" + idProduto;
     xmlhttp.onreadystatechange = function () {
@@ -95,9 +94,12 @@ function atualizaProduto() {
 /*  front.ts  */
 //var Produto: any = Produto;
 function criaTabelas(numeroTabelas) {
-    for (var iCount = 0; iCount < numeroTabelas; iCount++) {
-        var body;
-        body = document.getElementById("body");
+    var body;
+    body = document.getElementById("body");
+    for (var iCount = 0; iCount < document.getElementsByClassName("panel panel-primary").length; iCount++) {
+        body.removeChild(document.getElementsByClassName("panel panel-primary")[iCount]);
+    }
+    for (iCount = 0; iCount < numeroTabelas; iCount++) {
         var divPanelPrimary = document.createElement("div");
         divPanelPrimary.className = "panel panel-primary";
         divPanelPrimary.id = "divPanelPrimary_" + iCount;
@@ -162,6 +164,36 @@ function criaTabelas(numeroTabelas) {
         inputCategoria.className = "form-control";
         inputCategoria.id = "txtCategoria_" + iCount;
         divColCategoria.appendChild(inputCategoria);
+        divPanelBody.appendChild(document.createElement("br"));
+        divPanelBody.appendChild(document.createElement("br"));
+        var divColBotoes = document.createElement("div");
+        divColBotoes.className = "col-sm-8";
+        divColBotoes.id = "divColBotoes_" + iCount;
+        divPanelBody.appendChild(divColBotoes);
+        var divBtnGroup = document.createElement("div");
+        divBtnGroup.className = "btn-group";
+        divBtnGroup.id = "divBtnGroup_" + iCount;
+        divColBotoes.appendChild(divBtnGroup);
+        var btnAtualizarProduto = document.createElement("button");
+        btnAtualizarProduto.type = "button";
+        btnAtualizarProduto.className = "btn btn-primary";
+        btnAtualizarProduto.innerHTML = "Atualizar produto ";
+        btnAtualizarProduto.id = "btnAtualizarProduto_" + iCount;
+        divBtnGroup.appendChild(btnAtualizarProduto);
+        var spanIconeAtualizar = document.createElement("span");
+        spanIconeAtualizar.className = "glyphicon glyphicon-ok";
+        spanIconeAtualizar.id = "spanIconeAtualizar_" + iCount;
+        btnAtualizarProduto.appendChild(spanIconeAtualizar);
+        var btnDeletarProduto = document.createElement("button");
+        btnDeletarProduto.type = "button";
+        btnDeletarProduto.className = "btn btn-danger";
+        btnDeletarProduto.innerHTML = "Deletar produto ";
+        btnDeletarProduto.id = "btnDeletarProduto_" + iCount;
+        divBtnGroup.appendChild(btnDeletarProduto);
+        var spanIconeDeletar = document.createElement("span");
+        spanIconeDeletar.className = "glyphicon glyphicon-trash";
+        spanIconeDeletar.id = "spanIconeDeletar_" + iCount;
+        btnDeletarProduto.appendChild(spanIconeDeletar);
     }
 }
 function exibe(produtos) {
@@ -176,3 +208,18 @@ function exibe(produtos) {
         inputCategoria.value = "" + produtos[iCount].categoria;
     }
 }
+$(document).ready(function () {
+    $("body").on("click", "button", function () {
+        if (this.id.indexOf("btnAtualizarProduto_") > -1) {
+            var txtID = "txtId_" + this.id.substring(this.id.lastIndexOf("_") + 1);
+            var ID = document.getElementById(txtID).value;
+            alert("Atualizar o produto com o id " + ID);
+        }
+        if (this.id.indexOf("btnDeletarProduto_") > -1) {
+            var txtID = "txtId_" + this.id.substring(this.id.lastIndexOf("_") + 1);
+            var ID = document.getElementById(txtID).value;
+            deletaProduto(ID);
+            alert("Deletar o produto com o id " + ID);
+        }
+    });
+});

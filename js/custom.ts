@@ -85,9 +85,7 @@ function cadastrarProduto(){
   xmlhttp.setRequestHeader("Content-type", "application/JSON");
   xmlhttp.send(produto);
 }
-function deletaProduto(){
-
-  var idProduto: string = (<HTMLInputElement>document.getElementById("txtPesquisaProduto")).value;
+function deletaProduto(idProduto: string){
 
   var xmlhttp: XMLHttpRequest = new XMLHttpRequest();
   var url: string = "http://localhost:57708/api/product/" + idProduto;
@@ -135,9 +133,14 @@ function atualizaProduto(){
 
 function criaTabelas(numeroTabelas: number): void{
 
-    for (var iCount: number = 0; iCount < numeroTabelas; iCount++){         
-        var body: HTMLElement;
-        body = document.getElementById("body");   
+    var body: HTMLElement;
+    body = document.getElementById("body");
+
+    for (var iCount: number = 0; iCount < document.getElementsByClassName("panel panel-primary").length; iCount++){
+      body.removeChild(document.getElementsByClassName("panel panel-primary")[iCount]);
+    }
+
+    for (iCount = 0; iCount < numeroTabelas; iCount++){         
 
             var divPanelPrimary: HTMLDivElement = document.createElement("div");
             divPanelPrimary.className = "panel panel-primary";
@@ -214,8 +217,44 @@ function criaTabelas(numeroTabelas: number): void{
                         inputCategoria.type = "text";
                         inputCategoria.className = "form-control";
                         inputCategoria.id = "txtCategoria_" + iCount;
-                        divColCategoria.appendChild(inputCategoria);       
+                        divColCategoria.appendChild(inputCategoria);   
 
+                    divPanelBody.appendChild(document.createElement("br"));
+                    divPanelBody.appendChild(document.createElement("br"));
+
+                    var divColBotoes: HTMLDivElement = document.createElement("div");
+                    divColBotoes.className = "col-sm-8";
+                    divColBotoes.id = "divColBotoes_" + iCount;
+                    divPanelBody.appendChild(divColBotoes);
+
+                      var divBtnGroup: HTMLDivElement = document.createElement("div");
+                      divBtnGroup.className = "btn-group";
+                      divBtnGroup.id = "divBtnGroup_" + iCount;
+                      divColBotoes.appendChild(divBtnGroup);
+
+                        var btnAtualizarProduto: HTMLButtonElement = document.createElement("button");
+                        btnAtualizarProduto.type = "button";
+                        btnAtualizarProduto.className = "btn btn-primary";
+                        btnAtualizarProduto.innerHTML = "Atualizar produto ";
+                        btnAtualizarProduto.id = "btnAtualizarProduto_" + iCount;
+                        divBtnGroup.appendChild(btnAtualizarProduto);
+
+                          var spanIconeAtualizar: HTMLSpanElement = document.createElement("span");
+                          spanIconeAtualizar.className = "glyphicon glyphicon-ok";
+                          spanIconeAtualizar.id = "spanIconeAtualizar_" + iCount;
+                          btnAtualizarProduto.appendChild(spanIconeAtualizar);
+
+                        var btnDeletarProduto: HTMLButtonElement = document.createElement("button");
+                        btnDeletarProduto.type = "button";
+                        btnDeletarProduto.className = "btn btn-danger";
+                        btnDeletarProduto.innerHTML = "Deletar produto ";
+                        btnDeletarProduto.id = "btnDeletarProduto_" + iCount;
+                        divBtnGroup.appendChild(btnDeletarProduto);
+
+                          var spanIconeDeletar: HTMLSpanElement = document.createElement("span");
+                          spanIconeDeletar.className = "glyphicon glyphicon-trash";
+                          spanIconeDeletar.id = "spanIconeDeletar_" + iCount;
+                          btnDeletarProduto.appendChild(spanIconeDeletar);
     }
 }
 
@@ -233,3 +272,24 @@ function exibe(produtos: Array<Produto>){
         inputCategoria.value = "" + produtos[iCount].categoria;
     }
 }
+
+$(document).ready(function(){
+    $("body").on("click", "button", function(){
+        if (this.id.indexOf("btnAtualizarProduto_") > -1){
+
+            var txtID: string = "txtId_" + this.id.substring(this.id.lastIndexOf("_")+1);
+            var ID: string = (<HTMLInputElement> document.getElementById(txtID)).value;
+
+            alert("Atualizar o produto com o id " + ID );
+
+        }
+        if (this.id.indexOf("btnDeletarProduto_") > -1){
+            var txtID: string = "txtId_" + this.id.substring(this.id.lastIndexOf("_")+1);
+            var ID: string = (<HTMLInputElement> document.getElementById(txtID)).value;
+
+            deletaProduto(ID);
+
+            alert("Deletar o produto com o id " + ID);
+        }        
+    });
+});
