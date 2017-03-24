@@ -45,8 +45,7 @@ function buscaProduto() {
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }
-function cadastrarProduto() {
-    var produto = new Produto(document.getElementById("txtId").value, document.getElementById("txtDescricao").value, document.getElementById("txtPreco").value, document.getElementById("txtCategoria").value);
+function cadastrarProduto(produto) {
     var xmlhttp = new XMLHttpRequest();
     var url = "http://localhost:57708/api/product/";
     xmlhttp.onreadystatechange = function () {
@@ -59,7 +58,7 @@ function cadastrarProduto() {
     };
     xmlhttp.open("POST", url, true);
     xmlhttp.setRequestHeader("Content-type", "application/JSON");
-    xmlhttp.send(produto);
+    xmlhttp.send(JSON.stringify(produto));
 }
 function deletaProduto(idProduto) {
     var xmlhttp = new XMLHttpRequest();
@@ -75,8 +74,7 @@ function deletaProduto(idProduto) {
     xmlhttp.open("DELETE", url, true);
     xmlhttp.send();
 }
-function atualizaProduto() {
-    var produto = new Produto(document.getElementById("txtId").value, document.getElementById("txtDescricao").value, document.getElementById("txtPreco").value, document.getElementById("txtCategoria").value);
+function atualizaProduto(produto) {
     var xmlhttp = new XMLHttpRequest();
     var url = "http://localhost:57708/api/product/";
     xmlhttp.onreadystatechange = function () {
@@ -89,17 +87,18 @@ function atualizaProduto() {
     };
     xmlhttp.open("PUT", url, true);
     xmlhttp.setRequestHeader("Content-type", "application/JSON");
-    xmlhttp.send(produto);
+    xmlhttp.send(JSON.stringify(produto));
 }
 /*  front.ts  */
 //var Produto: any = Produto;
 function criaTabelas(numeroTabelas) {
     var body;
     body = document.getElementById("body");
-    for (var iCount = 0; iCount < document.getElementsByClassName("panel panel-primary").length; iCount++) {
-        body.removeChild(document.getElementsByClassName("panel panel-primary")[iCount]);
+    for (var iCount = 0; iCount < body.getElementsByClassName("panel panel-primary").length; iCount++) {
+        //alert("Delete: " + iCount);
+        //deletaLinha(iCount);
     }
-    for (iCount = 0; iCount < numeroTabelas; iCount++) {
+    for (var iCount = 0; iCount < numeroTabelas; iCount++) {
         var divPanelPrimary = document.createElement("div");
         divPanelPrimary.className = "panel panel-primary";
         divPanelPrimary.id = "divPanelPrimary_" + iCount;
@@ -122,6 +121,7 @@ function criaTabelas(numeroTabelas) {
         inputID.type = "text";
         inputID.className = "form-control";
         inputID.id = "txtId_" + iCount;
+        inputID.readOnly = true;
         divColID.appendChild(inputID);
         var divColDescricao = document.createElement("div");
         divColDescricao.className = "col-sm-5";
@@ -208,18 +208,25 @@ function exibe(produtos) {
         inputCategoria.value = "" + produtos[iCount].categoria;
     }
 }
+function deletaLinha(numeroLinha) {
+    var body;
+    body = document.getElementById("body");
+    body.removeChild(body.getElementsByClassName("panel panel-primary")[numeroLinha]);
+}
 $(document).ready(function () {
     $("body").on("click", "button", function () {
         if (this.id.indexOf("btnAtualizarProduto_") > -1) {
-            var txtID = "txtId_" + this.id.substring(this.id.lastIndexOf("_") + 1);
-            var ID = document.getElementById(txtID).value;
-            alert("Atualizar o produto com o id " + ID);
+            var txtID = this.id.substring(this.id.lastIndexOf("_") + 1);
+            var teste = document.getElementById("txtCategoria_" + 0).value;
+            var produto = new Produto(document.getElementById("txtId_" + txtID).value, document.getElementById("txtDescricao_" + txtID).value, document.getElementById("txtPreco_" + txtID).value, document.getElementById("txtCategoria_" + txtID).value);
+            atualizaProduto(produto);
         }
         if (this.id.indexOf("btnDeletarProduto_") > -1) {
-            var txtID = "txtId_" + this.id.substring(this.id.lastIndexOf("_") + 1);
+            var numero = this.id.substring(this.id.lastIndexOf("_") + 1);
+            var txtID = "txtId_" + numero;
             var ID = document.getElementById(txtID).value;
+            deletaLinha(numero);
             deletaProduto(ID);
-            alert("Deletar o produto com o id " + ID);
         }
     });
 });
