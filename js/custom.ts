@@ -47,7 +47,7 @@ function buscaProduto() {
 					produtos.push(produto);
 				}
 
-				criaTabelas(produtos.length);
+				criaTabelas(produtos.length, 'Exibição');
 				exibe(produtos);
 
 
@@ -124,10 +124,10 @@ function atualizaProduto(produto: Produto) {
 
 //var Produto: any = Produto;
 
-function criaTabelas(numeroTabelas: number): void {
+function criaTabelas(numeroTabelas: number, exibicaoCadastro: string): void {
 
 	var body: HTMLElement;
-	body = document.getElementById("body");
+	body = document.getElementById((exibicaoCadastro == "Exibição" ? "div_0" : "div_1"));
 
   for (var iCount: number = 0; iCount < body.getElementsByClassName("panel panel-primary").length; iCount++){
     //alert("Delete: " + iCount);
@@ -162,7 +162,7 @@ function criaTabelas(numeroTabelas: number): void {
 		inputID.type = "text";
 		inputID.className = "form-control";
 		inputID.id = "txtId_" + iCount;
-    inputID.readOnly = true;
+    	inputID.readOnly = (exibicaoCadastro == "Exibição" ? true : false);
 		divColID.appendChild(inputID);
 
 		var divColDescricao: HTMLDivElement = document.createElement("div");
@@ -227,29 +227,46 @@ function criaTabelas(numeroTabelas: number): void {
 		divBtnGroup.id = "divBtnGroup_" + iCount;
 		divColBotoes.appendChild(divBtnGroup);
 
-		var btnAtualizarProduto: HTMLButtonElement = document.createElement("button");
-		btnAtualizarProduto.type = "button";
-		btnAtualizarProduto.className = "btn btn-primary";
-		btnAtualizarProduto.innerHTML = "Atualizar produto ";
-		btnAtualizarProduto.id = "btnAtualizarProduto_" + iCount;
-		divBtnGroup.appendChild(btnAtualizarProduto);
 
-		var spanIconeAtualizar: HTMLSpanElement = document.createElement("span");
-		spanIconeAtualizar.className = "glyphicon glyphicon-ok";
-		spanIconeAtualizar.id = "spanIconeAtualizar_" + iCount;
-		btnAtualizarProduto.appendChild(spanIconeAtualizar);
+		if (exibicaoCadastro == "Cadastro"){
+			var btnCadastrarProduto: HTMLButtonElement = document.createElement("button");
+			btnCadastrarProduto.type = "button";
+			btnCadastrarProduto.className = "btn btn-success";
+			btnCadastrarProduto.innerHTML = "Cadastrar produto ";
+			btnCadastrarProduto.id = "btnCadastrarProduto_" + iCount;
+			divBtnGroup.appendChild(btnCadastrarProduto);
 
-		var btnDeletarProduto: HTMLButtonElement = document.createElement("button");
-		btnDeletarProduto.type = "button";
-		btnDeletarProduto.className = "btn btn-danger";
-		btnDeletarProduto.innerHTML = "Deletar produto ";
-		btnDeletarProduto.id = "btnDeletarProduto_" + iCount;
-		divBtnGroup.appendChild(btnDeletarProduto);
+			var spanIconeCadastrar: HTMLSpanElement = document.createElement("span");
+			spanIconeCadastrar.className = "glyphicon glyphicon-floppy-saved";
+			spanIconeCadastrar.id = "spanIconeCadastrar" + iCount;
+			btnCadastrarProduto.appendChild(spanIconeCadastrar);
+		}
 
-		var spanIconeDeletar: HTMLSpanElement = document.createElement("span");
-		spanIconeDeletar.className = "glyphicon glyphicon-trash";
-		spanIconeDeletar.id = "spanIconeDeletar_" + iCount;
-		btnDeletarProduto.appendChild(spanIconeDeletar);
+		if (exibicaoCadastro == "Exibição"){
+			var btnAtualizarProduto: HTMLButtonElement = document.createElement("button");
+			btnAtualizarProduto.type = "button";
+			btnAtualizarProduto.className = "btn btn-primary";
+			btnAtualizarProduto.innerHTML = "Atualizar produto ";
+			btnAtualizarProduto.id = "btnAtualizarProduto_" + iCount;
+			divBtnGroup.appendChild(btnAtualizarProduto);
+
+			var spanIconeAtualizar: HTMLSpanElement = document.createElement("span");
+			spanIconeAtualizar.className = "glyphicon glyphicon-ok";
+			spanIconeAtualizar.id = "spanIconeAtualizar_" + iCount;
+			btnAtualizarProduto.appendChild(spanIconeAtualizar);
+
+			var btnDeletarProduto: HTMLButtonElement = document.createElement("button");
+			btnDeletarProduto.type = "button";
+			btnDeletarProduto.className = "btn btn-danger";
+			btnDeletarProduto.innerHTML = "Deletar produto ";
+			btnDeletarProduto.id = "btnDeletarProduto_" + iCount;
+			divBtnGroup.appendChild(btnDeletarProduto);
+
+			var spanIconeDeletar: HTMLSpanElement = document.createElement("span");
+			spanIconeDeletar.className = "glyphicon glyphicon-trash";
+			spanIconeDeletar.id = "spanIconeDeletar_" + iCount;
+			btnDeletarProduto.appendChild(spanIconeDeletar);
+		}
 	}
 }
 
@@ -271,8 +288,28 @@ function exibe(produtos: Array < Produto > ) {
 function deletaLinha(numeroLinha: number) {
 
 	var body: HTMLElement;
-	body = document.getElementById("body");
+	body = document.getElementById("div_0");
 	body.removeChild(body.getElementsByClassName("panel panel-primary")[numeroLinha]);
+
+}
+
+function alterarAba(numeroAba: number){
+	for (var i = 0; i < 2; i++){
+		var tab = document.getElementById("aba_" + i);	tab.setAttribute("class", "inactive");		
+		var div = document.getElementById("div_" + i);	div.style.display = "none";
+	}
+	var tab = document.getElementById("aba_" + numeroAba);	tab.setAttribute("class", "active");
+
+	var div = document.getElementById("div_" + numeroAba);	div.style.display = "block";
+
+	if (numeroAba == 1){
+		var body: HTMLElement;
+		body = document.getElementById("div_1");
+		if (body.getElementsByClassName("panel panel-primary").length > 0)
+			body.removeChild(body.getElementsByClassName("panel panel-primary")[0]);		
+
+		criaTabelas(1, 'Cadastro');
+	}
 
 }
 
@@ -282,16 +319,15 @@ $(document).ready(function () {
 
 			var txtID: string = this.id.substring(this.id.lastIndexOf("_") + 1);
 
-      var teste: string = (<HTMLInputElement> document.getElementById("txtCategoria_" + 0) ).value;
+			var teste: string = (<HTMLInputElement> document.getElementById("txtCategoria_" + 0) ).value;
 
-      var produto: Produto = new Produto( (<HTMLInputElement> document.getElementById("txtId_" + txtID)).value, 
-                                          (<HTMLInputElement> document.getElementById("txtDescricao_" + txtID)).value, 
-                                          (<HTMLInputElement> document.getElementById("txtPreco_" + txtID)).value, 
-                                          (<HTMLInputElement> document.getElementById("txtCategoria_" + txtID)).value
-      );
+			var produto: Produto = new Produto( (<HTMLInputElement> document.getElementById("txtId_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtDescricao_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtPreco_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtCategoria_" + txtID)).value
+												);
 
-
-      atualizaProduto(produto);
+			atualizaProduto(produto);
 
 		}
 		if (this.id.indexOf("btnDeletarProduto_") > -1) {
@@ -302,6 +338,21 @@ $(document).ready(function () {
 			deletaLinha(numero);
 			deletaProduto(ID);
 		}
+		if (this.id.indexOf("btnCadastrarProduto_") > -1) {
+
+			var txtID: string = this.id.substring(this.id.lastIndexOf("_") + 1);
+
+			var teste: string = (<HTMLInputElement> document.getElementById("txtCategoria_" + 0) ).value;
+
+			var produto: Produto = new Produto( (<HTMLInputElement> document.getElementById("txtId_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtDescricao_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtPreco_" + txtID)).value, 
+												(<HTMLInputElement> document.getElementById("txtCategoria_" + txtID)).value
+												);
+												
+			cadastrarProduto(produto);
+
+		}		
 	});
 });
 

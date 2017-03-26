@@ -14,7 +14,7 @@
 
     <title>Product Manager</title>
   </head>
-  <body id="body">
+  <body id="body" onload="alterarAba(0)">
 
     <!-- Toolbar superior -->
     <nav class="navbar navbar-default">
@@ -26,8 +26,8 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Página Inicial</a></li>
-            <li class="inactive"><a href="#">Produtos</a></li>
+            <li id="aba_0" class="active"><a href="#"   onclick="alterarAba(0)">Página Inicial</a></li>
+            <li id="aba_1" class="inactive"><a href="#" onclick="alterarAba(1)">Produtos</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             
@@ -43,6 +43,11 @@
         </div>
       </div>
     </nav>
+
+    <div id="div_0">
+    </div>
+    <div id="div_1" onload="alert('Hello World')">
+    </div>
 
   </body>
 </html>
