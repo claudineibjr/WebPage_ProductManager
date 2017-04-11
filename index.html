@@ -6,8 +6,9 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link href="css/custom.css" rel="stylesheet" media="screen" />
 
-		<script src="js/jquery-1.9.1.js"></script>
-		<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="jQuery/jquery-1.9.1.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+		
     <script src="js/custom.js"></script>
     <script src="js/front.js"></script>
     <script src="js/teste.js"></script>
@@ -27,12 +28,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li id="aba_0" class="active"><a href="#"   onclick="alterarAba(0)">Página Inicial</a></li>
-            <li id="aba_1" class="inactive"><a href="#" onclick="alterarAba(1)">Produtos</a></li>
+            <li id="aba_1" class="inactive"><a href="#" onclick="alterarAba(1)">Cadastrar Produtos</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             
             <form class="navbar-form navbar-left">
               <div class="form-group">
+                <input type="text" class="form-control" placeholder="Link da API" id="txtAPILink" value="http://localhost:57708/api/product/">
                 <input type="text" class="form-control" placeholder="Pesquisar Produtos (id)" id="txtPesquisaProduto">
               </div>
               <button type="button" class="btn btn-default" onclick="buscaProduto()" id="btnPesquisaProduto" >Pesquisar</button>

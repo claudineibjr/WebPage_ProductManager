@@ -1,5 +1,13 @@
 {
-  "name"    : "Product-Manager",
-  "version" : "0.1.0",
-  "main"    : "main.js"
+  "name": "Product-Manager",
+  "productName": "Product Manager - Web Management",
+  "version": "0.1.0",
+  "description": "Client Web que consumirá a API do gerenciamento dos produtos.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "win64": "electron-packager . Product-Manager --platform=win32 --arch=x64",
+    "build": "electron-packager . --all"
+  },
+  "author": "ClaudineiBJr"
 }
