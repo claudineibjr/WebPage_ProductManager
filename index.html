@@ -6,38 +6,43 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link href="css/custom.css" rel="stylesheet" media="screen" />
 
-	<script src="jQuery/jquery-1.9.1.js"></script>
-	<script src="bootstrap/js/bootstrap.js"></script>
-		
-    <script src="js/custom.js"></script>
+    <script src="jQuery/jquery-1.9.1.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+      
+    <script src="js/customCategoria.js"></script>
+    <script src="js/customProduto.js"></script>
     <script src="js/front.js"></script>
-    <script src="js/teste.js"></script>
+    <script src="js/Produto.js"></script>
+    <script src="js/Categoria.js"></script>
+
+    <link rel="icon" href="content/icon.ico"/>
 
     <title>Product Manager</title>
+  
   </head>
+  
   <body id="body" onload="alterarAba(0)">
 
-    <!-- Toolbar superior -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Product Manager</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          
           <ul class="nav navbar-nav">
-            <li id="aba_0" class="active"><a href="#"   onclick="alterarAba(0)">Página Inicial</a></li>
-            <li id="aba_1" class="inactive"><a href="#" onclick="alterarAba(1)">Cadastrar Produtos</a></li>
+            <li id="aba_0" class="active"><a href="#"   onclick="alterarAba(0)">Produtos</a></li>
+            <li id="aba_1" class="inactive"><a href="#" onclick="alterarAba(1)">Categorias</a></li>
           </ul>
+
           <ul class="nav navbar-nav navbar-right">
             
             <form class="navbar-form navbar-left">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Link da API" id="txtAPILink" value="http://localhost:57708/api/product/">
-                <input type="text" class="form-control" placeholder="Pesquisar Produtos (id)" id="txtPesquisaProduto">
+                <input type="text" class="form-control" placeholder="Link da API" id="txtAPILink" value="http://localhost:57708/">
+                
               </div>
-              <button type="button" class="btn btn-default" onclick="buscaProduto()" id="btnPesquisaProduto" >Pesquisar</button>
             </form>
 
           </ul>
@@ -47,9 +52,27 @@
     </nav>
 
     <div id="div_0">
-    </div>
-    <div id="div_1" onload="alert('Hello World')">
+      <div class="panel panel-default" id="filtrosPesquisaProduto" >
+        
+        <div class="panel-heading">Filtros</div>
+        <div class="panel-body">
+          <div class="col-sm-8">
+            <input type="text" class="form-control" placeholder="Pesquisar Produtos (id)" id="txtPesquisaProduto">
+          </div>
+          
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-default" onclick="buscaProduto()" id="btnPesquisaProduto" >Pesquisar 
+              <span class=" glyphicon glyphicon-search"/>
+            </button>
+          </div>
+
+        </div>
+
+      </div>      
     </div>
 
+    <div id="div_1">
+    </div>
+    
   </body>
 </html>
