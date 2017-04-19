@@ -1,22 +1,27 @@
+var g_Categorias;
 var classNamePanel = "panel panel-default";
+var classNamePanel_primary = "panel panel-primary";
+var numAux = 1;
 function criaTabelas(numeroTabelas, exibicaoCadastro) {
     var body;
-    body = document.getElementById((exibicaoCadastro == "Exibição" ? "div_0" : "div_0"));
-    for (var iCount = 0; iCount < body.getElementsByClassName(classNamePanel).length; iCount = iCount) {
-        //if (body.getElementsByClassName(classNamePanel)[iCount].id != "filtrosPesquisaProduto")
-        body.removeChild(body.getElementsByClassName(classNamePanel)[iCount]);
-    }
+    body = document.getElementById("div_0");
+    /*if (exibicaoCadastro == "Exibição"){
+        for (var iCount: number = 0; iCount < body.getElementsByClassName(classNamePanel_primary).length; iCount = iCount){
+            //if (body.getElementsByClassName(classNamePanel)[iCount].id != "filtrosPesquisaProduto")
+            body.removeChild(body.getElementsByClassName(classNamePanel_primary)[iCount]);
+        }
+    }*/
     for (var iCount = 0; iCount < numeroTabelas; iCount++) {
         //Criação do Painel
         var divPanelPrimary = document.createElement("div");
-        divPanelPrimary.className = classNamePanel;
+        divPanelPrimary.className = (exibicaoCadastro == "Cadastro" ? classNamePanel_primary : classNamePanel);
         divPanelPrimary.id = "divPanelPrimary_" + (exibicaoCadastro == "Cadastro" ? "c" : "") + iCount;
         body.appendChild(divPanelPrimary);
         //Criação do cabeçalho do Painel
         var divPanelHeading = document.createElement("div");
         divPanelHeading.className = "panel-heading";
         divPanelHeading.id = "divPanelHeading_" + (exibicaoCadastro == "Cadastro" ? "c" : "") + iCount;
-        divPanelHeading.innerHTML = "Produto";
+        divPanelHeading.innerHTML = (exibicaoCadastro == "Cadastro" ? "Cadastrar produto" : "Produto");
         divPanelPrimary.appendChild(divPanelHeading);
         //Criação do corpo do Painel
         var divPanelBody = document.createElement("div");
@@ -142,9 +147,18 @@ function exibe(produtos) {
         addOpcaoCategoria(produtos[iCount].categoria, listaCategoria);
     }
 }
-function deletaLinha(numeroLinha) {
+function exibeCategoria(categorias) {
+    for (var iCount = 0; iCount < categorias.length; iCount++) {
+        var inputID = document.getElementById("txtId_Categoria_" + iCount);
+        var inputDescricao = document.getElementById("txtDescricao_Categoria_" + iCount);
+        inputID.value = "" + categorias[iCount].id;
+        inputDescricao.value = "" + categorias[iCount].descricao;
+    }
+}
+function deletaLinha(numeroLinha, produto_categoria) {
+    if (produto_categoria === void 0) { produto_categoria = "produto"; }
     var body;
-    body = document.getElementById("div_0");
+    body = document.getElementById((produto_categoria == "categoria" ? "div_1" : "div_0"));
     body.removeChild(body.getElementsByClassName(classNamePanel)[numeroLinha]);
 }
 function alterarAba(numeroAba) {
@@ -158,17 +172,16 @@ function alterarAba(numeroAba) {
     tab.setAttribute("class", "active");
     var div = document.getElementById("div_" + numeroAba);
     div.style.display = "block";
-    /*if (numeroAba == 0){
-        var body: HTMLElement;
-        body = document.getElementById("div_0");
-        if (body.getElementsByClassName(classNamePanel).length > 0)
-            body.removeChild(body.getElementsByClassName(classNamePanel)[0]);
-
-        criaTabelas(1, 'Cadastro');
-    }*/
-    if (numeroAba == 1) {
-        criaTabelasCategorias(1, 'Cadastro');
-    }
+    //if (numeroAba == 0 && "a" == "b"){
+    /*var body: HTMLElement;
+    body = document.getElementById("div_0");
+    if (body.getElementsByClassName(classNamePanel).length > 0)
+        body.removeChild(body.getElementsByClassName(classNamePanel)[0]);*/
+    //	criaTabelas(1, 'Cadastro');
+    //}
+    //if (numeroAba == 1){
+    //	criaTabelasCategorias(1, 'Cadastro');
+    //}*/
 }
 function addOpcaoCategoria(categoria, selectList) {
     var opcoesCategorias = document.createElement("option");
@@ -176,11 +189,13 @@ function addOpcaoCategoria(categoria, selectList) {
     opcoesCategorias.innerHTML = categoria.descricao.toString();
     selectList.appendChild(opcoesCategorias);
     selectList.selectedIndex = 1;
+    if (numAux == 1)
+        numAux = 2;
 }
 function addOpcoesCategoria(categorias) {
     var listasCategorias = document.getElementsByName("categorias");
     for (var i = 0; i < listasCategorias.length; i++) {
-        if (listasCategorias.item(i).childElementCount == categorias.length + 1) {
+        if (listasCategorias.item(i).childElementCount == categorias.length + numAux) {
             //console.log("Existem " + listasCategorias.item(i).childElementCount + " elementos e " + (categorias.length + 1) + " categorias" );
         }
         else {
@@ -196,20 +211,22 @@ function addOpcoesCategoria(categorias) {
 function criaTabelasCategorias(numeroTabelas, exibicaoCadastro) {
     var body;
     body = document.getElementById("div_1");
-    for (var iCount = 0; iCount < body.getElementsByClassName(classNamePanel).length; iCount = iCount) {
-        body.removeChild(body.getElementsByClassName(classNamePanel)[iCount]);
-    }
+    /*if (exibicaoCadastro == "Exibição"){
+        for (var iCount: number = 0; iCount < body.getElementsByClassName(classNamePanel_primary).length; iCount = iCount){
+            body.removeChild(body.getElementsByClassName(classNamePanel_primary)[iCount]);
+        }
+    }*/
     for (var iCount = 0; iCount < numeroTabelas; iCount++) {
         //Criação do Painel
         var divPanelPrimary = document.createElement("div");
-        divPanelPrimary.className = classNamePanel;
+        divPanelPrimary.className = (exibicaoCadastro == "Cadastro" ? classNamePanel_primary : classNamePanel);
         divPanelPrimary.id = "divPanelPrimary_" + iCount;
         body.appendChild(divPanelPrimary);
         //Criação do cabeçalho do Painel
         var divPanelHeading = document.createElement("div");
         divPanelHeading.className = "panel-heading";
         divPanelHeading.id = "divPanelHeading_" + iCount;
-        divPanelHeading.innerHTML = "Categoria";
+        divPanelHeading.innerHTML = (exibicaoCadastro == "Cadastro" ? "Cadastrar categoria" : "Categoria");
         divPanelPrimary.appendChild(divPanelHeading);
         //Criação do corpo do Painel
         var divPanelBody = document.createElement("div");
@@ -318,6 +335,18 @@ $(document).ready(function () {
             alert(produto.toString());
             cadastrarProduto(produto);
         }
+        //Clique no botão de pesquisa de categorias
+        if (this.id.indexOf("btnPesquisaCategoria") > -1) {
+            var txtID = document.getElementById("txtPesquisaCategoria").value;
+            if (txtID.trim() != "")
+                g_Categorias = buscaCategoria(true, Number(txtID));
+            else
+                g_Categorias = buscaCategoria(true);
+            //if (g_Categorias == null || g_Categorias == undefined){
+            //}
+            //criaTabelasCategorias(g_Categorias.length, "Exibição");
+            //exibeCategoria(g_Categorias);
+        }
         //Clique no botão de atualização de categoria
         if (this.id.indexOf("btnAtualizarCategoria_") > -1) {
             var txtID = this.id.substring(this.id.lastIndexOf("_") + 1);
@@ -327,14 +356,23 @@ $(document).ready(function () {
         //Clique no botão de cadastro de categoria
         if (this.id.indexOf("btnCadastrarCategoria_") > -1) {
             var txtID = this.id.substring(this.id.lastIndexOf("_") + 1);
-            var categoria = new Categoria(Number(document.getElementById("txtId_Categoria_" + txtID).value), document.getElementById("txtDescricao_Categoria_" + txtID).value);
+            var categoria = new Categoria(Number(document.getElementById("txtId_Categoria_c_" + txtID).value), document.getElementById("txtDescricao_Categoria_c_" + txtID).value);
             cadastrarCategoria(categoria);
+        }
+        //Clique no botão de deleção de produto
+        if (this.id.indexOf("btnDeletarCategoria_") > -1) {
+            var numero = this.id.substring(this.id.lastIndexOf("_") + 1);
+            var txtID = "txtId_Categoria_" + numero;
+            var ID = document.getElementById(txtID).value;
+            deletaLinha(numero, "categoria");
+            deletaCategoria(ID);
         }
     });
     $("body").on("click", "select", function () {
         //Clique no select de categorias
         if (this.id.indexOf("txtCategoria_Produto_") > -1) {
-            buscaCategoria();
+            if (g_Categorias == null)
+                g_Categorias = buscaCategoria(false);
         }
     });
 });

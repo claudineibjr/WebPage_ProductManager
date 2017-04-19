@@ -52,7 +52,7 @@
     </nav>
 
     <div id="div_0">
-      <div class="panel panel-default" id="filtrosPesquisaProduto" >
+      <div class="panel panel-primary">
         
         <div class="panel-heading">Filtros</div>
         <div class="panel-body">
@@ -68,10 +68,72 @@
 
         </div>
 
-      </div>      
+      </div>
+
+
+
+      <div class="panel panel-primary" id="divPanelPrimary_c0">
+        <div class="panel-heading" id="divPanelHeading_c0">Cadastrar produto</div>
+        <div class="panel-body" id="divPanelBody_c0">
+            <div class="col-sm-1" id="divColID_c0"><input placeholder="ID" class="form-control" id="txtId_Produto_c0" readonly="" type="text"></div>
+            <div class="col-sm-5" id="divColDescricao_c0"><input placeholder="Descrição" class="form-control" id="txtDescricao_Produto_c0" type="text"></div>
+            <div class="col-sm-2" id="divColPreco_c0">
+              <div class="input-group" id="divClassPreco_c0"><span class="input-group-addon" id="spanClassGroupPreco_c0">R$</span><input placeholder="Preço (R$)" min="0" step="1.00" class="form-control currency" id="txtPreco_Produto_c0" type="number"></div>
+            </div>
+            <div class="col-sm-4" id="divColCategoria_c0">
+              <select class="form-control" name="categorias" id="txtCategoria_Produto_c0">
+                  <option value="">Escolha uma categoria</option>
+              </select>
+            </div>
+            <br><br>
+            <div class="col-sm-8" id="divColBotoes_c0">
+              <div class="btn-group" id="divBtnGroup_c0"><button type="button" class="btn btn-success" id="btnCadastrarProduto_c0">Cadastrar produto <span class="glyphicon glyphicon-floppy-saved" id="spanIconeCadastrar_c0"></span></button></div>
+            </div>
+        </div>
+      </div>
+
+
     </div>
 
     <div id="div_1">
+      <div class="panel panel-primary">
+        
+        <div class="panel-heading">Filtros</div>
+        <div class="panel-body">
+          <div class="col-sm-8">
+            <input type="text" class="form-control" placeholder="Pesquisar Categorias (id)" id="txtPesquisaCategoria">
+          </div>
+          
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-default" id="btnPesquisaCategoria" >Pesquisar 
+              <span class=" glyphicon glyphicon-search"/>
+            </button>
+          </div>
+
+        </div>
+
+      </div>      
+
+
+
+      <div class="panel panel-primary" id="divPanelPrimary_c_0">
+        <div class="panel-heading" id="divPanelHeading_c_0">Cadastrar categoria</div>
+        <div class="panel-body" id="divPanelBody_c_0">
+            <div class="col-sm-1" id="divColID_c_0"><input placeholder="ID" class="form-control" id="txtId_Categoria_c_0" readonly="" type="text"></div>
+            <div class="col-sm-11" id="divColDescricao_c_0"><input placeholder="Descrição" class="form-control" id="txtDescricao_Categoria_c_0" type="text"></div>
+            <br><br>
+            <div class="col-sm-8" id="divColBotoes_c_0">
+              <div class="btn-group" id="divBtnGroup_c_0">
+                <button type="button" class="btn btn-success" id="btnCadastrarCategoria_c_0">Cadastrar categora 
+                  <span class="glyphicon glyphicon-floppy-saved" id="spanIconeCadastrar_c_0"></span>
+                  </button>
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+
     </div>
     
   </body>

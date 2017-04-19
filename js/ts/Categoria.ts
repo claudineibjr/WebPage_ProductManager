@@ -11,5 +11,4 @@ class Categoria {
 		return 	"ID: " + this.id + "\n" +
 				"Descrição: " + this.descricao;
 	}
-
 }
